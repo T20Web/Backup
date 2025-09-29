@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Ficha
 import bleach
 
-# config simples bleach
+
 ALLOWED_TAGS = []
 ALLOWED_ATTRS = {}
 

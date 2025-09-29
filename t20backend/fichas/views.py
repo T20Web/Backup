@@ -10,18 +10,12 @@ class FichaViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def export(self, request, pk=None):
-        """Retorna JSON completo da ficha (para exportar)."""
         ficha = self.get_object()
         serializer = self.get_serializer(ficha)
         return Response(serializer.data)
 
     @action(detail=False, methods=['post'], url_path='import')
     def import_ficha(self, request):
-        """
-        Importa ou atualiza uma ficha via JSON.
-        Se o body tiver 'id' e existir -> atualiza; caso contrário cria.
-        Valida esquema via serializer.
-        """
         data = request.data
         ficha_id = data.get('id')
         if ficha_id:
@@ -38,10 +32,6 @@ class FichaViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='default')
     def default_ficha(self, request):
-        """
-        Retorna uma 'Ficha Padrão' (schema + preenchimento básico).
-        Útil para o frontend popular ao criar nova ficha.
-        """
         default = {
             "schema_version": "1.0",
             "jogador": "",
@@ -64,4 +54,3 @@ class FichaViewSet(viewsets.ModelViewSet):
             "carga": ""
         }
         return Response(default)
-    
